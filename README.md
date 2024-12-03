@@ -1,6 +1,40 @@
 # math_data
-Output :
-```
+
+## Description
+
+**math_data** est un projet visant à reconnaître des chiffres manuscrits à l'aide de deux approches différentes :
+1. Une implémentation personnalisée de la descente de gradient.
+2. L'utilisation de l'algorithme de régression logistique fourni par Scikit-learn.
+
+Le jeu de données utilisé provient de l'archive [Optical Recognition of Handwritten Digits](https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits), qui contient des images numériques des chiffres manuscrits.
+
+---
+
+## Fonctionnalités principales
+
+- **Descente de gradient personnalisée** : Une implémentation de la descente de gradient, permettant d'entraîner un modèle de régression logistique binaire.
+- **Comparaison avec Scikit-learn** : Évaluation des performances d'un modèle similaire basé sur la régression logistique intégrée de Scikit-learn.
+
+---
+
+## Installation et Prérequis
+
+### Prérequis
+- Python 3.7+
+- Bibliothèques nécessaires :
+  - `numpy`
+  - `scikit-learn`
+
+### Installation
+1. Clonez ce dépôt :
+   ```bash
+   git clone https://github.com/votre-repo/math_data.git
+   cd math_data
+   pip install -r requirements.txt
+2. Utilisation :
+   python ex1.py
+
+## Sortie
 Coût initial : 0.6931471805599435
 Gradient initial (premières valeurs) : [ 0.          0.03586964  0.02460265 -0.03241423  0.01146664]
 Coût final après descente de gradient : 0.4797149271911441
@@ -18,6 +52,15 @@ Point optimal :
  -0.05819206 -0.23031167  0.09958355  0.30109335  0.41393298  0.06481136
  -0.4403271   0.20263607  0.02476945  0.07067217  0.02004412 -0.00382742
  -0.10783367 -0.05120038 -0.00123005 -0.08043362]
+
 Itérations effectuées : 9806
 Précision avec descente de gradient personnalisée : 71.39%
 Précision avec LogisticRegression de Scikit-learn : 99.44%
+
+## Comparaison des Méthodes
+
+| Méthode                           | Coût Final | Précision sur les données de test |
+|-----------------------------------|------------|------------------------------------|
+| Descente de Gradient Personnalisée | 0.4797     | 71.39%                            |
+| LogisticRegression (Scikit-learn) | N/A        | 99.44%                            |
+
