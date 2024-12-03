@@ -32,10 +32,10 @@ Le jeu de données utilisé provient de l'archive [Optical Recognition of Handwr
    cd math_data
    pip install -r requirements.txt
 2. Utilisation :
-   python ex1.py
+   ```python ex1.py```
 
 ## Sortie
-Coût initial : 0.6931471805599435
+```Coût initial : 0.6931471805599435
 Gradient initial (premières valeurs) : [ 0.          0.03586964  0.02460265 -0.03241423  0.01146664]
 Coût final après descente de gradient : 0.4797149271911441
 
@@ -56,7 +56,7 @@ Point optimal :
 Itérations effectuées : 9806
 Précision avec descente de gradient personnalisée : 71.39%
 Précision avec LogisticRegression de Scikit-learn : 99.44%
-
+```
 ## Comparaison des Méthodes
 
 | Méthode                           | Coût Final | Précision sur les données de test |
