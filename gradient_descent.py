@@ -2,9 +2,8 @@ import numpy as np
 
 class GradientDescent:
     """
-    Implémente un algorithme générique de descente de gradient, supportant à la fois
-    la descente de gradient classique et la descente de gradient stochastique.
-
+    Implémente un algorithme générique de descente de gradient pour un problème multiclasse.
+    
     Paramètres initiaux :
     - gradient (callable) : La fonction qui calcule le gradient de la fonction de coût.
     - learning_rate (float) : Le taux d'apprentissage (par défaut à 0.01).
@@ -12,7 +11,7 @@ class GradientDescent:
     - epsilon (float) : Critère d'arrêt pour la norme du gradient (par défaut à 1e-6).
     - batch_size (int) : Taille des mini-lots pour SGD (par défaut à 1, équivalent au pur SGD).
     """
-
+    
     def __init__(self, gradient, learning_rate=0.01, max_iterations=1000, epsilon=1e-6, batch_size=1):
         self.gradient = gradient
         self.learning_rate = learning_rate
@@ -21,19 +20,22 @@ class GradientDescent:
         self.epsilon = epsilon
         self.num_iterations = 0
         self.batch_size = batch_size
+        self.loss_history = []  # Historique des pertes pour le traçage ou l'analyse
 
-    def descent(self, initial_point, data=None):
+    def descent(self, initial_point, data=None, loss_function=None):
         """
-        Effectue l'algorithme de descente de gradient.
-
+        Effectue l'algorithme de descente de gradient pour un problème multiclasse.
+        
         Paramètres :
-        - initial_point (array-like) : Point initial pour l'algorithme.
-        - data (array-like ou None) : Les données nécessaires pour SGD, sous la forme (X, y) si utilisé.
-
+        - initial_point (array-like) : Point initial pour l'algorithme (initialisation des poids).
+        - data (tuple ou None) : Les données nécessaires pour SGD, sous la forme (X, y).
+        - loss_function (callable ou None) : Fonction pour calculer la perte (ex. cross-entropy).
+        
         Retourne :
         - array-like : Le point optimal trouvé par l'algorithme.
         """
-        current_point = initial_point
+        current_point = np.array(initial_point, dtype=float)
+        self.loss_history = []  # Réinitialisation à chaque appel
         stopped = False  # Flag pour indiquer un arrêt anticipé
 
         for epoch in range(self.max_iterations):
@@ -54,7 +56,7 @@ class GradientDescent:
                     
                     current_point = self.update(current_point, current_gradient)
             else:
-                # Descente classique
+                # Descente classique (pas de données nécessaires)
                 current_gradient = self.gradient(current_point)
                 
                 if np.linalg.norm(current_gradient) < self.epsilon:
@@ -62,6 +64,12 @@ class GradientDescent:
                     break
                 
                 current_point = self.update(current_point, current_gradient)
+
+            # Calcul de la perte si une fonction de perte est fournie
+            if loss_function is not None and data is not None:
+                X, y = data
+                loss = loss_function(current_point, X, y)
+                self.loss_history.append(loss)
 
             if stopped:
                 break
@@ -72,11 +80,11 @@ class GradientDescent:
     def update(self, point, gradient_value):
         """
         Met à jour un point en utilisant le gradient et le taux d'apprentissage.
-
+        
         Paramètres :
         - point (array-like) : Point actuel.
         - gradient_value (array-like) : Gradient de la fonction de coût au point actuel.
-
+        
         Retourne :
         - array-like : Nouveau point mis à jour.
         """
